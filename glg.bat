@@ -1,0 +1,1 @@
+java -jar bgf.jar "%~1"
