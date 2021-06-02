@@ -69,7 +69,7 @@ public class Mesh {
 		
 		
 		
-	//	unk7 =3;
+	
 
 		putByte(unk7);
 		putInt(0);

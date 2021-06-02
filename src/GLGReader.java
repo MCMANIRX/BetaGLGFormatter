@@ -249,20 +249,24 @@ public class GLGReader {
 				errorCheck("cleanup",i);
 				
 			//re-align and get unknown byte 'unk7'
+				meshData[i].unk7 =0 ;		
 				
-			read.seek(ipos0+0x3E);
-			
-			while(read.read() ==0xff) {
-					while(!zeroFF(read.read())) 
-						if(read.read()==0x0) 
-							break;
-					read.seek(read.getFilePointer()-0x1);
-					
-			}
-			
-			read.seek(read.getFilePointer()-0x1);
-			meshData[i].unk7 = read.readByte();
-			
+				read.seek(ipos0+0x20); //arbitrary, should probably fix at some point
+				
+				while(read.read() !=0xff);
+				while(read.readShort() != 0x0);
+				
+				read.seek(read.getFilePointer()-0x4);			
+				while(!zeroFF(read.read()) && !zeroFF(read.read()));
+				
+			//	pl(read.getFilePointer());
+				meshData[i].unk7 = read.readByte();
+				//pl(meshData[i].unk7);
+				
+				if(meshData[i].unk7 ==0x0) {
+					p("byte read error. Aborting at "+pdah((int) read.getFilePointer()));
+					System.exit(0);
+				}
 			
 			
 			while(read.readByte()== 0);
